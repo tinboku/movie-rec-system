@@ -1,5 +1,7 @@
 # MovieLens Recommendation System
 
+> Side project from Dec 2025 - Jan 2026. Migrated to GitHub for portfolio.
+
 Recommendation system built on MovieLens 100K dataset, comparing collaborative filtering approaches from traditional methods to neural models.
 
 ## Models
