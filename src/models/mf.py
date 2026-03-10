@@ -35,12 +35,19 @@ class SVDRecommender:
         sigma = sigma[idx]
         Vt = Vt[idx, :]
 
+        # filter out near-zero singular values
+        mask = sigma > 1e-9
+        U = U[:, mask]
+        sigma = sigma[mask]
+        Vt = Vt[mask, :]
+
         self.user_factors = U
         self.sigma = sigma
         self.item_factors = Vt.T  # (n_items, k)
 
         # reconstruct
-        self.pred_matrix = self.global_mean + U @ np.diag(sigma) @ Vt
+        with np.errstate(divide='ignore', over='ignore', invalid='ignore'):
+            self.pred_matrix = self.global_mean + U @ np.diag(sigma) @ Vt
         self.pred_matrix = np.nan_to_num(self.pred_matrix, nan=self.global_mean)
         self.pred_matrix = np.clip(self.pred_matrix, 1, 5)
 
