@@ -42,7 +42,7 @@ def main():
     if cfg['data']['split_method'] == 'time':
         train, test = train_test_split_by_time(ratings, cfg['data']['test_ratio'])
     else:
-        train, test = train_test_split_random(ratings, cfg['data']['test_ratio'])
+        train, test = train_test_split_random(ratings, cfg['data']['test_ratio'], seed=cfg['seed'])
     print(f"  train: {len(train)}, test: {len(test)}")
 
     k = cfg['eval']['k']

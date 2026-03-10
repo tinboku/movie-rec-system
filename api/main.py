@@ -2,7 +2,6 @@ import sys, os
 sys.path.insert(0, os.path.join(os.path.dirname(__file__), '..'))
 
 import pickle
-import numpy as np
 import torch
 from fastapi import FastAPI, HTTPException, Query
 
@@ -23,18 +22,19 @@ N_ITEMS = 1682
 def load_models():
     global svd_model, ncf_model, title_map, train_user_items
 
-    with open('saved_models/svd.pkl', 'rb') as f:
+    base = os.path.join(os.path.dirname(__file__), '..', 'saved_models')
+
+    with open(os.path.join(base, 'svd.pkl'), 'rb') as f:
         svd_model = pickle.load(f)
 
-    with open('saved_models/titles.pkl', 'rb') as f:
+    with open(os.path.join(base, 'titles.pkl'), 'rb') as f:
         title_map = pickle.load(f)
 
-    with open('saved_models/train_user_items.pkl', 'rb') as f:
+    with open(os.path.join(base, 'train_user_items.pkl'), 'rb') as f:
         train_user_items = pickle.load(f)
 
-    # load ncf
     ncf_model = NeuMF(N_USERS, N_ITEMS, gmf_dim=32, mlp_dim=32, mlp_hidden=[64, 32, 16])
-    ncf_model.load_state_dict(torch.load('saved_models/neumf.pt', map_location='cpu', weights_only=True))
+    ncf_model.load_state_dict(torch.load(os.path.join(base, 'neumf.pt'), map_location='cpu'))
     ncf_model.eval()
 
 
