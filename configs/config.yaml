@@ -1,0 +1,26 @@
+data:
+  raw_dir: data/raw
+  n_users: 943
+  n_items: 1682
+  test_ratio: 0.2
+  split_method: time  # time or random
+
+eval:
+  k: 10
+  threshold: 4  # rating >= threshold is positive
+
+models:
+  knn:
+    k: 20
+  svd:
+    n_factors: 50
+  ncf:
+    gmf_dim: 32
+    mlp_dim: 32
+    mlp_hidden: [64, 32, 16]
+    neg_ratio: 4
+    batch_size: 256
+    epochs: 15
+    lr: 0.001
+
+seed: 42
