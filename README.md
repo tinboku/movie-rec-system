@@ -34,6 +34,26 @@ pytest tests/ -v
 - `configs/` - hyperparameters
 - `data/raw/` - MovieLens 100K (u.data, u.item, u.user)
 
+## API
+
+Train models and start the API server:
+
+```bash
+python scripts/train_save.py
+uvicorn api.main:app --reload
+```
+
+Or with Docker:
+
+```bash
+docker build -t movie-rec .
+docker run -p 8000:8000 movie-rec
+```
+
+Endpoints:
+- `GET /recommend/{user_id}?k=10&model=svd` — get recommendations
+- `GET /health` — health check
+
 ## Data
 
 MovieLens 100K: 100,000 ratings from 943 users on 1,682 movies.

@@ -9,6 +9,7 @@ build/
 venv/
 env/
 results/
+saved_models/
 *.log
 .vscode/
 .idea/
